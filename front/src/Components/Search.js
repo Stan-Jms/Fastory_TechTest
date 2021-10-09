@@ -31,32 +31,37 @@ const Search = ({data}) => {
 
     return (
         <>
-            <div className="Bar">
-                <input 
-                    type="text"
-                    name="search" 
-                    placeholder="Search here" 
-                    onChange= {searching} 
-                />
-                    {query.map((val)=> {
-                        return(
-                        <a href="card" onClick={localStorage.setItem("obj",JSON.stringify(val))}>
-                            {val.name}
-                        </a>
-                        )
-                    })}
+            
+            <div className="compo">
+                <h2>Try it now !</h2>
+                <div className="bar">
+                    <input 
+                        type="text"
+                        name="search" 
+                        placeholder="Search here" 
+                        onChange= {searching} 
+                    />
+                    <select id="watching">
+                        <option value="">All datas</option>
+                        <option value="vehicles">Vehicles</option>
+                        <option value="planets">Planets</option>
+                        <option value="films">Films</option>
+                        <option value="people">People</option>
+                        <option value="starships">Starships</option>
+                        <option value="species">Species</option>
+                    </select>
+                </div>
+                        {query.map((val)=> {
+                            return(
+                                <div className="query_value">
+                                    <a href="card" onClick={localStorage.setItem("obj",JSON.stringify(val))}>{val.name}</a>
+                                    <br />
+                                </div>
+                            )
+                        })}
+                
             </div>
-            <select id="watching">
-                <option value="">--------</option>
-                <option value="vehicles">Vehicles</option>
-                <option value="planets">Planets</option>
-                <option value="films">Films</option>
-                <option value="people">People</option>
-                <option value="starships">Starships</option>
-                <option value="species">Species</option>
-            </select>
         </>
-        
     );
 
 }

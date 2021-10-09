@@ -1,0 +1,19 @@
+$color-1: #272b30;
+$color-2 : #FFFFFF;
+
+
+
+
+
+body{
+    background-color: $color-1;
+    font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: $color-2;
+}    
+a{
+    text-decoration: none;
+}
+
+a:visited{
+    color:$color-2 ;
+}

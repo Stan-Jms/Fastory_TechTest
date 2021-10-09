@@ -1,0 +1,28 @@
+$width_bar :30vw;
+
+.Bar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+    input,select{
+        font-size: 1.2em;
+        height: 5vh;
+        
+    }
+    input{
+        width: $width_bar;
+           
+    }
+}
+
+.query_values{
+        display: flex;
+        flex-direction: column;
+        width: $width_bar;
+        background-color: rgb(75, 75, 75);
+        align-items: center;
+        justify-content: center;
+
+    }

@@ -1,5 +1,13 @@
-$color-1: #272b30;
-$color-2 : #FFFFFF;
+/*Color of fonts/bars and so on*/
+$color-1 : #FFFFFF;
+$color-2 : black;
+$color-3 : goldenrod;
+/*Shades of grey used in the site*/
+$grey-1: rgb(36, 39, 44);
+$grey-2 : rgb(48, 48, 48);
+$grey-3: rgb(34,34,34);
+/*Magic padding setup*/
+$padding : 2%;
 
 * {
     margin: 0;
@@ -9,14 +17,14 @@ $color-2 : #FFFFFF;
 
 
 body{
-    background-color: $color-1;
+    background-color: $grey-1;
     font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: $color-2;
+    color: $color-1;
 }    
 a{
     text-decoration: none;
 }
 
 a:visited{
-    color:$color-2 ;
+    color:$color-1 ;
 }

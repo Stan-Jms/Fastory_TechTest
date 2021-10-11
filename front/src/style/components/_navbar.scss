@@ -1,4 +1,5 @@
 .navigation{
+    /*Swapi Indexor title stylesheet*/
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -6,19 +7,19 @@
     height: 5vh;
 
     p{
-        padding-left: 2%;
+        padding-left: $padding;
     }
     a{
         display: flex;
         align-items: center;
-        padding-right: 2%;
-        padding-left: 2%;
+        padding-right: $padding;
+        padding-left: $padding;
         height: 100%;
-        border-left: 1px solid black ;
+        border-left: 1px solid $color-2 ;
         -webkit-transition: background 0.2s;
     }
 
     a:hover{
-        background-color: black;
+        background-color: $color-2;
     }
 }

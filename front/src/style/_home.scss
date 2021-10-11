@@ -1,16 +1,17 @@
 .swapi{
-    background-color: rgb(34, 34, 34);
-    color:goldenrod;
+    /*Swapi Indexor title stylesheet*/
+    background-color: $grey-3;
+    color:$color-3;
     height: 40vh;
     width: 100vw;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    border-top:1px black solid ;
+    border-top:1px $color-2 solid ;
     h1{
         font-size: 50px;
-        padding-bottom: 3%;
+        padding-bottom: $padding;
     }
     h4{
         font-size:22px;

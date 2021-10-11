@@ -2,14 +2,17 @@ import React,{useState} from "react";
 
 
 const Card = () => {
-    const query = JSON.parse(localStorage.getItem("obj"));
+    const query = JSON.parse(localStorage.getItem("obj"));/*Get data in localstorage */
     switch(query){
+        /*The user get to this page without stored datas */
         case null:
             return(
                 <h1>Une erreur est survenue !</h1>
             );
+        /*The user have some datas */    
         default:
             switch(query.type){
+                /*Switch for the type of datas */
                 case "films":
                     return(
                         <div className="card_body">
@@ -105,6 +108,7 @@ const Card = () => {
                             </div>
                         </div>
                     );
+                /*If data not matching our standards */    
                 default:
                     return(
                         <h1>Une erreur est survenue !</h1>

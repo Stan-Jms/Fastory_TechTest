@@ -6,9 +6,9 @@ import Foobar from "../Components/Foobar";
 
 const Home = () =>{
     const [data,setData] = useState([]);
-    
+    /*Connection at the api made make sure to change the url */
     useEffect(()=> {
-        axios.get(/*"https://hapi-fastory.herokuapp.com/"*/"http://localhost:3001/", {
+        axios.get(/*Your url where the server is started with port*/"http://localhost:3001/", {
                 auth: {
                 username: 'Luke',
                 password: 'dadsucks' 
@@ -19,16 +19,16 @@ const Home = () =>{
 
     return (
         <>
-            <Navbar/>
+            <Navbar/>{/*Navigation bar at header*/}
             <div className="swapi">
                 <h1>SWAPI INDEXOR</h1>
                 <h4>The Indexor for Swapi's database</h4>
             </div>
-            <Search data={data}/>
+            <Search data={data}/>{/*Searchbar with the data linked to it*/}
             <div className="void">
                 <p>All the data from the database now simplified with this engine !</p>
             </div>
-            <Foobar/>
+            <Foobar/>{/*Footerbar at the footer*/}
         </>
     )
 }

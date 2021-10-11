@@ -3,7 +3,6 @@ import React,{useState} from "react";
 
 const Card = () => {
     const query = JSON.parse(localStorage.getItem("obj"));
-    console.log(query);
     switch(query){
         case null:
             return(

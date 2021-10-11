@@ -6,13 +6,15 @@
     align-items: center;
     justify-content: center;
     background-color: rgb(48, 48, 48);
+    border-top:1px black solid ;
+    border-bottom:1px black solid ;
 };
 
 
 
 .bar{
 
-    margin-top: 5%;
+    margin-top: 3%;
 
     input,select{
         color:darkgrey;
@@ -44,4 +46,13 @@
 
 .query_value:nth-child(n+6){
     display: none;
+}
+
+.void{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    height: 18vh;
+    border-bottom: 1px solid black;
 }

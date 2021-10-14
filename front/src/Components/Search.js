@@ -3,7 +3,9 @@ import React,{useEffect, useState} from "react";
 
 const Search = ({data}) => {
 
+    
     const [query,setQuery] = useState([]);
+
     /*Called function when input*/
     const searching = (res) =>{
         const word = res.target.value;
@@ -30,9 +32,9 @@ const Search = ({data}) => {
         setQuery(filter);
     }
 
-
     return (
         <>
+                    
             {/*Bundle of seachbar + small text */}
             <div className="compo">
                 <h2>Try it now !</h2>
@@ -55,9 +57,10 @@ const Search = ({data}) => {
                 </div>
                 {/*This thing maps the whole datas and only displays the matching ones to lead the user thowards a new page where it will find it's query, to save a call to the api we will stock the data in the localstorage */}
                         {query.map((val)=> {
+                            
                             return(
                                 <div className="query_value">
-                                    <a href="card" onClick={localStorage.setItem("obj",JSON.stringify(val))}>{val.name}</a>
+                                    <a href={"card?value="+val.id}>{val.name}</a>
                                     <br />
                                 </div>
                             )

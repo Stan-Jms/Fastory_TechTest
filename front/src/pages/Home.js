@@ -13,8 +13,9 @@ const Home = () =>{
                 username: 'Luke',
                 password: 'dadsucks' 
                 }
-            }).then((res) => setData(res.data));
+            }).then((res) => {setData(res.data);localStorage.setItem('allDatas', JSON.stringify(res.data));});
     },[]);
+
 
 
     return (

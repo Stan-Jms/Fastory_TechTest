@@ -1,0 +1,30 @@
+.card_body{
+    background-color: $grey-2;
+
+    .base{
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+
+        .on{
+            display: flex;
+        }
+
+        .off{
+            display: none;
+        };
+        button{
+            width: fit-content;
+        }
+    };
+
+
+};
+
+.error{
+    background-color: $color-1;
+    color: $color-2;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+};

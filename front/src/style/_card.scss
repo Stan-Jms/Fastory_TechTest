@@ -1,20 +1,48 @@
 .card_body{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     background-color: $grey-2;
 
     .base{
         height: 90vh;
         display: flex;
         flex-direction: column;
+        padding-left: 5em;
+
+        h2{
+            color: $color-3;
+            padding-top: 1em;
+            font-size: 48px;
+            padding-bottom: 2em;
+        }
+
+        p{
+            font-size: 24px;
+            padding-bottom: 2em;
+        }
 
         .on{
+            padding-top:5em;
             display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
         }
 
         .off{
             display: none;
         };
         button{
-            width: fit-content;
+            width:80px;
+            border:none;
+            text-decoration:none;
+            border-radius:9px;
+            background-color:$color-3;
+            -webkit-transition: background 0.3s;
+        }
+
+        button:hover{
+            background-color: $color-4;
         }
     };
 
@@ -28,3 +56,13 @@
     display: flex;
     justify-content: center;
 };
+
+.photo{
+    display: flex;
+    align-items: center;
+    margin-right: 5em;
+    margin-top: 5em;
+    width: 86px;
+    height: 128px;
+    border: 1px solid $color-3;
+}

@@ -54,6 +54,7 @@ const Card = () => {
                                         <p>Date of release : {query.release_date}</p>
                                     </div>
                                 </div>
+                                <div className="photo">insert photo</div>
                             </div>
                             <Foobar />
                         </>
@@ -74,6 +75,7 @@ const Card = () => {
                                         <p>Max speed : {query.max_atmosphering_speed}</p>
                                     </div>
                                 </div>
+                                <div className="photo">insert photo</div>
                             </div>
                             <Foobar />
                         </>
@@ -83,10 +85,12 @@ const Card = () => {
                         <>
                             <Navbar />
                             <div className="card_body">
+                                
                                 <div className="base">
+                                    
                                     <h2>Name : {query.name}</h2>
-                                    <p>Birth Date {query.birth_year}</p>
-                                    <p>Gender :{query.gender}</p>
+                                    <p>Birth Date : {query.birth_year}</p>
+                                    <p>Gender : {query.gender}</p>
                                     <button onClick={trigger}>See more</button>
                                     <div className={Activated ? "off" : "on"}>
                                         <p>Hair colour :{query.hair_color}</p>
@@ -94,6 +98,7 @@ const Card = () => {
                                         <p>Height :{query.height}</p>
                                     </div>
                                 </div>
+                                <div className="photo">insert photo</div>
                             </div>
                             <Foobar />
                         </>
@@ -114,6 +119,7 @@ const Card = () => {
                                         <p>Diameter :{query.diameter}</p>
                                     </div>
                                 </div>
+                                <div className="photo">insert photo</div>
                             </div>
                             <Foobar />
                         </>
@@ -135,6 +141,7 @@ const Card = () => {
                                         <p>Eyes colour : {query.eye_color}</p>
                                     </div>
                                 </div>
+                                <div className="photo">insert photo</div>
                             </div>
                             <Foobar />
                         </>
@@ -154,6 +161,7 @@ const Card = () => {
                                         <p>Passengers possible : {query.passengers}</p>
                                     </div>
                                 </div>
+                                <div className="photo">insert photo</div>
                             </div>
                             <Foobar />
                         </>

@@ -5,40 +5,52 @@ const Bcrypt = require('bcrypt');
 const axios = require("axios");
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////My functions used for scraping the data of SWAPI/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 const BASE_URL = "https://swapi.dev/api/";
 const URL_VALUES = ["films/?","people/?","species/?","starships/?","vehicles/?","planets/?"]
 
-/*Used fonction for calling all the datas*/
-const GetAllData = async (end_url) => {
-    let response =[];/*Stacker*/
-    let k=0,j=0,i=0;/*Increments */
-    let stock =[];/*Temp holder of raw datas*/
-    let reg = /\/[0-9]+\//s;/*Regex for dumping the extra numbers at the end of an url*/
-    while(k<URL_VALUES.length)
-    {
-        stock.push(await GetData(URL_VALUES[k],end_url));/*Fetch all data using previous function */
-        k+=1;
-    }
-    while(i<stock.length){
-        j=0;
-        while(j<stock[i].length){
-            response.push(stock[i][j]);
-            /*Sanitazing the JSON file (better to be done on back-end than front*/
-            j+=1;
+
+/*Used fonction for calling all the names*/
+
+const GetAllNames = async (end_url) =>{
+    let i = 0, response = new Array;
+    while(i<URL_VALUES.length){
+        if(i==0){
+            let x = await GetData(URL_VALUES[i],end_url,"title"),j=0;
+            x.forEach(val =>{
+                response.push([URL_VALUES[i].replace("/?",""),val,1+j]);
+                j++;
+            });
+            
         }
-        i+=1;
+        else{
+            let x = await GetData(URL_VALUES[i],end_url,"name"),j=0;
+            x.forEach(val =>{
+                response.push([URL_VALUES[i].replace("/?",""),val,1+j]);
+                j++;
+            });  
+        }
+        i++;
     }
-    response.forEach((element,index) => {
-        /*Giving personal id and type according to it's url */
-        element.id = index;
-        element.type = element.url.replace("https://swapi.dev/api/","");
-        element.type = element.type.replace(reg,"");
-    });
-    
     return response;
+
 }
 
-const GetData = async (search,end_url) => {
+const GetQuery = async (type,id,end_url) => {
+    let url = BASE_URL + type + '/' + id + '/?' + end_url;
+    let payload = await axios.get(url);
+    return payload['data'];
+
+}
+
+const GetData = async (search,end_url,query) => {
     /*Ok time to focus hehe */
     let num = 1;/*Page number */
     let url = BASE_URL + search + "page=" + num + end_url; /*Custom url for requests using params */
@@ -57,7 +69,6 @@ const GetData = async (search,end_url) => {
         {
             return {Error: value.status}/*Return code error */
         }
-
         else{
             /*While there's an other page or if the other page doesn't exist but the verif token didn't changed yet still get the last datas */
             while(value.data.next != null || (value.data.next === null && checker === true)){
@@ -68,7 +79,7 @@ const GetData = async (search,end_url) => {
                 for(let i=0;i<10;i++){  /*Scrap the data */
                     acc =value.data.results[i];
                     if(acc != null){/*If the data isn't null add all the datas but the null's one */
-                        response.push(acc);
+                        response.push(acc[query]);      
                     }
                 }
                 if(checker!=false){/*If there's an other page go to it */
@@ -77,13 +88,16 @@ const GetData = async (search,end_url) => {
                     value = await axios.get(url);
                 }
             }
-
             return response;
-        }
-        
+        } 
     }  
-    
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////My functions used for the server/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 const users = {
@@ -134,10 +148,10 @@ const init = async () => {
     server.auth.strategy('login','basic',{validate});
     server.route({
         method:'GET',
-        path:'/',/*Homepage return all the datas */
+        path:'/name',/*Homepage return all the datas */
         handler: (request,h) => {
-            let end_url ="&format=json";
-            return GetAllData(end_url);
+            const end_url ="&format=json";
+            return GetAllNames(end_url);
         },
         options: {
             auth: 'login',/*Login enabled */
@@ -145,12 +159,27 @@ const init = async () => {
         }
     });
 
+    server.route({
+        method:'GET',
+        path:'/query/',/*Homepage return all the datas */
+        handler: (request,h) => {
+            const end_url = 'format=' + request.query.format;
+            const id = request.query.id;
+            const type = request.query.type;
+            return GetQuery(type,id,end_url);
+        },
+        options: {
+            auth: 'login',/*Login enabled */
+            cors:true /*CORS ALLOWED */
+        }
+    });
 
     server.route({
         method:'GET',
         path:'/{any*}',/*If user gets lost bring error */
         handler: (request,h) => {
-            return "<h1>Erreur 404 - Mauvaise manipulation jeune padawan</h1>";
+            const data = {"error":404} 
+            return h.response(data).code(201);
         }
     });
 

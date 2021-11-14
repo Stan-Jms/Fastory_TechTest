@@ -1,31 +1,37 @@
 import React,{useEffect, useState} from "react";
+import { Link } from 'react-router-dom';
+import axios from "axios";
 
 
-const Search = ({data}) => {
+const Search = () => {
+
+    const [query,setQuery] = useState([]);
+    const [wordfilter,setWordFilter] = useState("");
+    const [data,setData] = useState([]);
+    /*Connection at the api made make sure to change the url */
 
     
-    const [query,setQuery] = useState([]);
-
+    useEffect(()=> {
+        axios.get(/*Your url where the server is started with port*/"http://localhost:3001/name", {
+                auth: {
+                username: 'Luke',
+                password: 'dadsucks' 
+                }
+            }).then((res) => {setData(res.data);});
+    },[]);
+    
     /*Called function when input*/
-    const searching = (res) =>{
-        const word = res.target.value;
-        const watch = document.getElementById("watching");
+    const searching = () =>{
         /*Among all elements add them a name if they only have a title then return their name*/ 
         const filter = data.filter((val) =>{
-            if(val.title !== undefined){
-                val.name = val.title;
-            }
-            if(word === '')
-            {
+            if(wordfilter === ''){
                 setQuery([]);
             }
-            if(val.type === watch.value)
-            {
-                return val.name.toLowerCase().includes(word.toLowerCase());
+            if(val[0] === wordfilter.toLowerCase()){
+                return val[1].toLowerCase().includes(wordfilter.toLowerCase());
             }
-            else if(watch.value === "")
-            {
-                return val.name.toLowerCase().includes(word.toLowerCase());
+            else if(wordfilter === ""){
+                return val[1].toLowerCase().includes(wordfilter.toLowerCase());
             }
         });
         
@@ -45,7 +51,7 @@ const Search = ({data}) => {
                         placeholder="Search here" 
                         onChange= {searching} /*Function call for each input */
                     />
-                    <select id="watching">
+                    <select id="watching" onChange={(event) => setWordFilter(event.target.value)}>
                         <option value="">All datas</option>
                         <option value="vehicles">Vehicles</option>
                         <option value="planets">Planets</option>
@@ -59,8 +65,17 @@ const Search = ({data}) => {
                         {query.map((val)=> {
                             
                             return(
-                                <div className="query_value">
-                                    <a href={"card?value="+val.id}>{val.name}</a>
+                                <div className="query_value" key={val[2]}>
+                                    <Link
+                                        to={{
+                                            pathname: "/card",
+                                            search: "?type=" + val[0] + "&id=" + val [2] + "&format=json",
+                                            state: { fromDashboard: true }
+                                        }}
+                                        >
+                                            {val[1]}
+                                        
+                                        </Link>
                                     <br />
                                 </div>
                             )

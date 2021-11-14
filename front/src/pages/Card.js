@@ -1,31 +1,34 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import Navbar from "../Components/Navbar"
 import Foobar from "../Components/Foobar"
+
+const axios = require("axios");
 
 const Card = () => {
 
     const [Activated,setActivated] = useState("false");
+    const [data,setData] = useState([]);
 
     const url = window.location.search;
-    const data = JSON.parse(localStorage.getItem("allDatas"));/*Get data in localstorage */
     const urlParam = new URLSearchParams(url);
-    const param = parseInt(urlParam.get("value"));
-    let query = null;
+    const typeParam = urlParam.get("type");
+    const idParam = urlParam.get("id");
+    const formatParam = urlParam.get("format");
 
-    for(let i=0;i< data.length;i+=1){
-        if(data[i].id === param){
-            query = data[i];
-            i = data.length;
-        }
-    }
-
+    useEffect(()=> {
+        axios.get("http://localhost:3001/query/?type=" + typeParam + "&id=" + idParam + "&format=" + formatParam, {
+                auth: {
+                username: 'Luke',
+                password: 'dadsucks' 
+                }
+            }).then((res) => {setData(res.data);});
+    },[]);
+    
     const trigger = () =>{
         setActivated(!Activated);
     }
 
-    
-
-    switch(query){
+    switch(data){
         /*The user get to this page without stored datas */
         case null:
             return(
@@ -37,7 +40,7 @@ const Card = () => {
             );
         /*The user have some datas */    
         default:
-            switch(query.type){
+            switch(typeParam){
                 /*Switch for the type of datas */
                 case "films":
                     return(
@@ -45,13 +48,13 @@ const Card = () => {
                             <Navbar />
                             <div className="card_body">
                                 <div className="base">
-                                    <h2>Title of the movie : {query.title}</h2>
-                                    <p>Opening scrolling intro : <br/>{query.opening_crawl}</p>
-                                    <p>Made by :{query.director}</p>
+                                    <h2>Title of the movie : {data.title}</h2>
+                                    <p>Opening scrolling intro : <br/>{data.opening_crawl}</p>
+                                    <p>Made by :{data.director}</p>
                                     <button onClick={trigger}>See more</button>
                                     <div className={Activated ? "off" : "on"}>
-                                        <p>Executive producer : {query.producer}</p>
-                                        <p>Date of release : {query.release_date}</p>
+                                        <p>Executive producer : {data.producer}</p>
+                                        <p>Date of release : {data.release_date}</p>
                                     </div>
                                 </div>
                                 <div className="photo">insert photo</div>
@@ -65,14 +68,14 @@ const Card = () => {
                             <Navbar />
                             <div className="card_body">
                                 <div className="base">
-                                    <h2>Name : {query.name}</h2>
-                                    <p>Manufacturer : {query.manufacturer}</p>
-                                    <p>Model : {query.model}</p>
-                                    <p>Vehicle class : {query.vehicle_class}</p>
+                                    <h2>Name : {data.name}</h2>
+                                    <p>Manufacturer : {data.manufacturer}</p>
+                                    <p>Model : {data.model}</p>
+                                    <p>Vehicle class : {data.vehicle_class}</p>
                                     <button onClick={trigger}>See more</button>
                                     <div className={Activated ? "off" : "on"}>
-                                        <p>Crew on board : {query.crew}</p>
-                                        <p>Max speed : {query.max_atmosphering_speed}</p>
+                                        <p>Crew on board : {data.crew}</p>
+                                        <p>Max speed : {data.max_atmosphering_speed}</p>
                                     </div>
                                 </div>
                                 <div className="photo">insert photo</div>
@@ -88,14 +91,14 @@ const Card = () => {
                                 
                                 <div className="base">
                                     
-                                    <h2>Name : {query.name}</h2>
-                                    <p>Birth Date : {query.birth_year}</p>
-                                    <p>Gender : {query.gender}</p>
+                                    <h2>Name : {data.name}</h2>
+                                    <p>Birth Date : {data.birth_year}</p>
+                                    <p>Gender : {data.gender}</p>
                                     <button onClick={trigger}>See more</button>
                                     <div className={Activated ? "off" : "on"}>
-                                        <p>Hair colour :{query.hair_color}</p>
-                                        <p>Eyes colour :{query.eye_color}</p>
-                                        <p>Height :{query.height}</p>
+                                        <p>Hair colour :{data.hair_color}</p>
+                                        <p>Eyes colour :{data.eye_color}</p>
+                                        <p>Height :{data.height}</p>
                                     </div>
                                 </div>
                                 <div className="photo">insert photo</div>
@@ -109,14 +112,14 @@ const Card = () => {
                             <Navbar />
                             <div className="card_body">
                                 <div className="base">
-                                    <h2>Name :{query.name}</h2>
-                                    <p>Climate : {query.climate}</p>
-                                    <p>Terrain :{query.terrain}</p>
-                                    <p>Population :{query.population}</p>
+                                    <h2>Name :{data.name}</h2>
+                                    <p>Climate : {data.climate}</p>
+                                    <p>Terrain :{data.terrain}</p>
+                                    <p>Population :{data.population}</p>
                                     <button onClick={trigger}>See more</button>
                                     <div className={Activated ? "off" : "on"}>
-                                        <p>Gravity :{query.gravity}</p>
-                                        <p>Diameter :{query.diameter}</p>
+                                        <p>Gravity :{data.gravity}</p>
+                                        <p>Diameter :{data.diameter}</p>
                                     </div>
                                 </div>
                                 <div className="photo">insert photo</div>
@@ -130,15 +133,15 @@ const Card = () => {
                             <Navbar />
                             <div className="card_body">
                                 <div className="base">
-                                    <h2>Name : {query.name}</h2>
-                                    <p>Classification : {query.classification}</p>
-                                    <p>Average lifespan :{query.average_lifespan}</p>
-                                    <p>Language used :{query.language}</p>
+                                    <h2>Name : {data.name}</h2>
+                                    <p>Classification : {data.classification}</p>
+                                    <p>Average lifespan :{data.average_lifespan}</p>
+                                    <p>Language used :{data.language}</p>
                                     <button onClick={trigger}>See more</button>
                                     <div className={Activated ? "off" : "on"}>
-                                        <p>Avg. Height : {query.average_height}</p>
-                                        <p>Hair colour : {query.hair_color}</p>
-                                        <p>Eyes colour : {query.eye_color}</p>
+                                        <p>Avg. Height : {data.average_height}</p>
+                                        <p>Hair colour : {data.hair_color}</p>
+                                        <p>Eyes colour : {data.eye_color}</p>
                                     </div>
                                 </div>
                                 <div className="photo">insert photo</div>
@@ -152,13 +155,13 @@ const Card = () => {
                             <Navbar />
                             <div className="card_body">
                                 <div className="base">
-                                    <h2>Name :{query.name}</h2>
-                                    <p>Model : {query.model}</p>
-                                    <p>Price in Galactacal credits :{query.cost_in_credits}</p>
+                                    <h2>Name :{data.name}</h2>
+                                    <p>Model : {data.model}</p>
+                                    <p>Price in Galactacal credits :{data.cost_in_credits}</p>
                                     <button onClick={trigger}>See more</button>
                                     <div className={Activated ? "off" : "on"}>
-                                        <p>Crew on board : {query.crew}</p>
-                                        <p>Passengers possible : {query.passengers}</p>
+                                        <p>Crew on board : {data.crew}</p>
+                                        <p>Passengers possible : {data.passengers}</p>
                                     </div>
                                 </div>
                                 <div className="photo">insert photo</div>

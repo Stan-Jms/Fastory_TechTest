@@ -1,11 +1,13 @@
 import React from "react";
+import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom";
 
 const Navbar = () =>{
     return(
         <>
             <div className="navigation">
                 <p>Swapi Indexor</p>
-                <a href="/">Home</a>
+                <Link to="/">Home</Link>
+
             </div>
         </>
     );
